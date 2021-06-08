@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using IdentityServer4.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,6 +13,7 @@ using MusicApp.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MusicApp.Data.Servibes.Bootstrapper.Data;
 
 namespace MusicApp
 {
@@ -25,17 +28,37 @@ namespace MusicApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<IdentityDataSeeder>();
+            services.AddHostedService<SetupIdentityDataSeeder>();
+
+            services.AddDbContext<IdentityDbContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection"), options =>
+                    {
+                        options.MigrationsHistoryTable("__IdentityMigrationsHistory", "identity");
+                    }));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+                {
+                    options.SignIn.RequireConfirmedAccount = false;
+                    options.User.RequireUniqueEmail = true;
+                })
+                .AddEntityFrameworkStores<IdentityDbContext>()
+                .AddDefaultTokenProviders()
+                .AddDefaultUI();
 
             services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+                .AddApiAuthorization<ApplicationUser, IdentityDbContext>(options =>
+                {
+                    options.IdentityResources.Add(new IdentityResource(
+                            name: "roles",
+                            displayName: "Roles",
+                            userClaims: new List<string> { "role" })
+                    { Required = true });
+                    options.Clients[0].AllowedScopes.Add("roles");
+                });
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
