@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
-import { MyComponentComponent } from './my-component/my-component.component';
 
 const routes: Routes = [
   {
-    path: 'home',
+    path: 'songs',
     component: MyComponentComponent,
     canActivate: [AuthorizeGuard],
   },

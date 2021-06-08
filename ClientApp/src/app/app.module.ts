@@ -8,12 +8,10 @@ import { AppComponent } from './app.component';
 import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.module';
 import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
 import { AppRoutingModule } from './app-routing.module';
-import { MyComponentComponent } from './my-component/my-component.component';
 
 @NgModule({
   declarations: [	
     AppComponent,
-    MyComponentComponent
    ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
