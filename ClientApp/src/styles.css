@@ -1,11 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap-icons/font/bootstrap-icons.css";
 
+html,
 body {
-  background-color: #e5e5f769;
-  background-image: radial-gradient(#e1423a59 0.2px, #e5e5f778 0.5px);
-  background-size: 5px 5px;
+  height: 100%;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

@@ -1,38 +1,45 @@
-<div class="main">
-  <div class="d-flex flex-column flex-shrink-0 p-3 text-white sidebar">
-    <div class="d-flex justify-content-center align-items-center">
-      <a href="#" class="my-1 text-white text-decoration-none">
-        <i class="fs-1 bi bi-music-note-beamed brand"></i>
-        <strong class="fs-3 p-3">Songer</strong>
-      </a>
+<mat-sidenav-container class="example-container">
+  <mat-sidenav mode="side" opened>
+    <div class="d-flex flex-column p-3 text-white sidebar">
+      <div class="d-flex justify-content-center align-items-center">
+        <a href="#" class="my-1 text-white text-decoration-none">
+          <i class="fs-1 bi bi-music-note-beamed brand"></i>
+          <strong class="fs-3 p-3">Songer</strong>
+        </a>
+      </div>
+      <hr />
+      <ul class="d-flex align-self-stretch nav nav-pills flex-column mt-2 mb-auto">
+        <li class="nav-item">
+          <a href="#" class="d-flex align-items-center nav-link text-white active">
+            <i class="fs-3 bi bi-file-earmark-music-fill"></i>
+            <strong class="mx-2 p-2">Lista emisji</strong>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="d-flex align-items-center nav-link text-white">
+            <i class="fs-3 bi bi-list-ol"></i>
+            <strong class="mx-2 p-2">Ranking</strong>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="d-flex align-items-center nav-link text-white">
+            <i class="fs-3 bi bi-people-fill"></i>
+            <strong class="mx-2 p-2">U&#380;ytkownicy</strong>
+          </a>
+        </li>
+      </ul>
+      <hr />
+      <div class="d-flex justify-content-center">
+        <a
+          href="#"
+          class="d-flex text-white text-decoration-none align-items-center">
+          <i class="fs-4 bi bi-box-arrow-left"></i>
+          <strong class="p-3">Wyloguj</strong>
+        </a>
+      </div>
     </div>
-    <hr>
-    <ul class="d-flex align-self-stretch nav nav-pills flex-column mt-2 mb-auto">
-      <li class="nav-item">
-        <a href="#" class="d-flex align-items-end nav-link text-white active">
-          <i class="fs-3 bi bi-file-earmark-music-fill"></i>
-          <strong class="mx-2 p-2">Lista emisji</strong>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="#" class="d-flex align-items-end nav-link text-white">
-          <i class="fs-3 bi bi-list-ol"></i>
-          <strong class="mx-2 p-2">Ranking</strong>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="#" class="d-flex align-items-end nav-link text-white">
-          <i class="fs-3 bi bi-people-fill"></i>
-          <strong class="mx-2 p-2">U&#380;ytkownicy</strong>
-        </a>
-      </li>
-    </ul>
-    <hr>
-    <div class="d-flex justify-content-center">
-      <a href="#" class="d-flex text-white text-decoration-none align-items-center">
-        <i class="fs-4 bi bi-box-arrow-left"></i>
-        <strong class="p-3">Wyloguj</strong>
-      </a>
-    </div>
-  </div>
-</div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    
+  </mat-sidenav-content>
+</mat-sidenav-container>
