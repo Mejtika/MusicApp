@@ -2,7 +2,7 @@
   <mat-sidenav mode="side" opened>
     <div class="d-flex flex-column p-3 text-white sidebar">
       <div class="d-flex justify-content-center align-items-center">
-        <a routerLink="/"  class="my-1 text-white text-decoration-none">
+        <a routerLink=""  class="my-1 text-white text-decoration-none">
           <i class="fs-1 bi bi-music-note-beamed brand"></i>
           <strong class="fs-3 p-3">Songer</strong>
         </a>
@@ -10,19 +10,19 @@
       <hr />
       <ul class="d-flex align-self-stretch nav nav-pills flex-column mt-2 mb-auto">
         <li class="nav-item">
-          <a routerLink="/songs"  class="d-flex align-items-center nav-link text-white active">
+          <a routerLink="/songs"  class="d-flex align-items-center nav-link text-white" routerLinkActive="active">
             <i class="fs-3 bi bi-file-earmark-music-fill"></i>
             <strong class="mx-2 p-2">Lista emisji</strong>
           </a>
         </li>
         <li class="nav-item">
-          <a routerLink="/ranking"  class="d-flex align-items-center nav-link text-white">
+          <a routerLink="/ranking"  class="d-flex align-items-center nav-link text-white" routerLinkActive="active">
             <i class="fs-3 bi bi-list-ol"></i>
             <strong class="mx-2 p-2">Ranking</strong>
           </a>
         </li>
-        <li class="nav-item">
-          <a routerLink="/users" class="d-flex align-items-center nav-link text-white">
+        <li *ngIf="isAdmin()" class="nav-item">
+          <a routerLink="/users" class="d-flex align-items-center nav-link text-white" routerLinkActive="active">
             <i class="fs-3 bi bi-people-fill"></i>
             <strong class="mx-2 p-2">U&#380;ytkownicy</strong>
           </a>

@@ -2,6 +2,8 @@ export const ApplicationName = 'MusicApp';
 
 export const ReturnUrlType = 'returnUrl';
 
+export const SessionStorageKey = 'oidc.user:https://localhost:5001:MusicApp';
+
 export const QueryParameterNames = {
   ReturnUrl: ReturnUrlType,
   Message: 'message'
