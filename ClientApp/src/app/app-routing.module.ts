@@ -8,8 +8,8 @@ const routes: Routes = [
   { path: '', redirectTo: 'songs', pathMatch: 'full' },
   {
     path: 'songs',
-    canLoad: [LazyAuthorizeGuard],
-    canActivate: [AuthorizeGuard],
+    // canLoad: [LazyAuthorizeGuard],
+    // canActivate: [AuthorizeGuard],
     loadChildren: () =>
       import('./songs/songs.module').then((module) => module.SongsModule),
   },
