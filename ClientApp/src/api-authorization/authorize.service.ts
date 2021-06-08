@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User, UserManager, WebStorageStateStore } from 'oidc-client';
-import { BehaviorSubject, concat, from, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, concat, from, Observable } from 'rxjs';
 import { filter, map, mergeMap, take, tap } from 'rxjs/operators';
 import {
   ApplicationPaths,
@@ -62,6 +62,22 @@ export class AuthorizeService {
         tap((u) => this.userSubject.next(u))
       ),
       this.userSubject.asObservable()
+    );
+  }
+
+  public havePermissions(role: string): Observable<[boolean, boolean]> {
+    return combineLatest([
+      this.isAuthenticated(),
+      this.getUserRole().pipe(
+        map((r) => r.toString().toUpperCase() === role.toUpperCase())
+      ),
+    ]).pipe(map(([authenticated, inRole]) => [authenticated, inRole]));
+  }
+
+  public getUserRole(): Observable<string> {
+    return from(this.ensureUserManagerInitialized()).pipe(
+      mergeMap(() => this.userManager.getUser()),
+      map((u) => u && u.profile.role)
     );
   }
 
