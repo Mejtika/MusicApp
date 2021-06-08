@@ -88,9 +88,7 @@ export class LogoutComponent implements OnInit {
   }
 
   private async navigateToReturnUrl(returnUrl: string) {
-    await this.router.navigateByUrl(returnUrl, {
-      replaceUrl: true
-    });
+    await this.router.navigate(ApplicationPaths.LoginPathComponents, { replaceUrl: true });
   }
 
   private getReturnUrl(state?: INavigationState): string {
