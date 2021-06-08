@@ -65,11 +65,12 @@ export class AuthorizeService {
     );
   }
 
-  public havePermissions(role: string): Observable<[boolean, boolean]> {
+  public havePermissions(requiredRole: string): Observable<[boolean, boolean]> {
     return combineLatest([
       this.isAuthenticated(),
       this.getUserRole().pipe(
-        map((r) => r.toString().toUpperCase() === role.toUpperCase())
+        filter(role => !!role),
+        map(role => role.toString().toUpperCase() === requiredRole.toUpperCase())
       ),
     ]).pipe(map(([authenticated, inRole]) => [authenticated, inRole]));
   }
