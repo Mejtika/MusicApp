@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.module';
 import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
 import { AppRoutingModule } from './app-routing.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [	
@@ -19,6 +20,7 @@ import { AppRoutingModule } from './app-routing.module';
     HttpClientModule,
     FormsModule,
     ApiAuthorizationModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     // { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }
