@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using IdentityServer4.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
@@ -13,7 +14,7 @@ using MusicApp.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MusicApp.Data.Servibes.Bootstrapper.Data;
+using MusicApp.Data.MusicApp.Data;
 
 namespace MusicApp
 {
@@ -101,6 +102,40 @@ namespace MusicApp
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+
+                endpoints.MapGet("/Identity/Account/Register", context => Task.Factory.StartNew(() => context.Response.StatusCode = 404));
+                endpoints.MapGet("/Identity/Account/StatusMessage", context => Task.Factory.StartNew(() => context.Response.StatusCode = 404));
+                endpoints.MapGet("/Identity/Account/ConfirmEmailChange", context => Task.Factory.StartNew(() => context.Response.StatusCode = 404));
+                endpoints.MapGet("/Identity/Account/ForgotPasswordConfirmation", context => Task.Factory.StartNew(() => context.Response.StatusCode = 404));
+                endpoints.MapGet("/Identity/Account/LoginWith2fa", context => Task.Factory.StartNew(() => context.Response.StatusCode = 404));
+                endpoints.MapGet("/Identity/Account/RegisterConfirmation", context => Task.Factory.StartNew(() => context.Response.StatusCode = 404));
+                endpoints.MapGet("/Identity/Account/ResetPasswordConfirmation", context => Task.Factory.StartNew(() => context.Response.StatusCode = 404));
+                endpoints.MapGet("/Identity/Account/AccessDenied", context => Task.Factory.StartNew(() => context.Response.StatusCode = 404));
+                endpoints.MapGet("/Identity/Account/ExternalLogin", context => Task.Factory.StartNew(() => context.Response.StatusCode = 404));
+                endpoints.MapGet("/Identity/Account/Lockout", context => Task.Factory.StartNew(() => context.Response.StatusCode = 404));
+                endpoints.MapGet("/Identity/Account/LoginWithRecoveryCode", context => Task.Factory.StartNew(() => context.Response.StatusCode = 404));
+                endpoints.MapGet("/Identity/Account/ConfirmEmail", context => Task.Factory.StartNew(() => context.Response.StatusCode = 404));
+                endpoints.MapGet("/Identity/Account/ForgotPassword", context => Task.Factory.StartNew(() => context.Response.StatusCode = 404));
+                endpoints.MapGet("/Identity/Account/ResetPassword", context => Task.Factory.StartNew(() => context.Response.StatusCode = 404));
+                endpoints.MapGet("/Identity/Account/ResendEmailConfirmation", context => Task.Factory.StartNew(() => context.Response.StatusCode = 404));
+
+                endpoints.MapGet("/Identity/Account/Manage/SetPassword", context => Task.Factory.StartNew(() => context.Response.StatusCode = 404));
+                endpoints.MapGet("/Identity/Account/Manage/Index", context => Task.Factory.StartNew(() => context.Response.StatusCode = 404));
+                endpoints.MapGet("/Identity/Account/Manage/EnableAuthenticator", context => Task.Factory.StartNew(() => context.Response.StatusCode = 404));
+                endpoints.MapGet("/Identity/Account/Manage/Disable2fa", context => Task.Factory.StartNew(() => context.Response.StatusCode = 404));
+                endpoints.MapGet("/Identity/Account/Manage/StatusMessage", context => Task.Factory.StartNew(() => context.Response.StatusCode = 404));
+                endpoints.MapGet("/Identity/Account/Manage/TwoFactorAuthentication", context => Task.Factory.StartNew(() => context.Response.StatusCode = 404));
+                endpoints.MapGet("/Identity/Account/Manage/ResetAuthenticator", context => Task.Factory.StartNew(() => context.Response.StatusCode = 404));
+                endpoints.MapGet("/Identity/Account/Manage/GenerateRecoveryCodes", context => Task.Factory.StartNew(() => context.Response.StatusCode = 404));
+                endpoints.MapGet("/Identity/Account/Manage/Email", context => Task.Factory.StartNew(() => context.Response.StatusCode = 404));
+                endpoints.MapGet("/Identity/Account/Manage/DeletePersonalData", context => Task.Factory.StartNew(() => context.Response.StatusCode = 404));
+                endpoints.MapGet("/Identity/Account/Manage/ManageNav", context => Task.Factory.StartNew(() => context.Response.StatusCode = 404));
+                endpoints.MapGet("/Identity/Account/Manage/ShowRecoveryCodes", context => Task.Factory.StartNew(() => context.Response.StatusCode = 404));
+                endpoints.MapGet("/Identity/Account/Manage/PersonalData", context => Task.Factory.StartNew(() => context.Response.StatusCode = 404));
+                endpoints.MapGet("/Identity/Account/Manage/ExternalLogins", context => Task.Factory.StartNew(() => context.Response.StatusCode = 404));
+                endpoints.MapGet("/Identity/Account/Manage/DownloadPersonalData", context => Task.Factory.StartNew(() => context.Response.StatusCode = 404));
+                endpoints.MapGet("/Identity/Account/Manage/ChangePassword", context => Task.Factory.StartNew(() => context.Response.StatusCode = 404));
+                endpoints.MapGet("/Identity/Account/Manage/Layout", context => Task.Factory.StartNew(() => context.Response.StatusCode = 404));
             });
 
             app.UseSpa(spa =>
