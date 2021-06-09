@@ -1,3 +1,16 @@
-<p>
-  song works!
-</p>
+<div class="container">
+  <div class="chart mt-3">
+    <div class="d-flex justify-content-center w-25">
+      <select #mySelect class="form-select" aria-label="Default select example" (change)="changeYear(mySelect.value)">
+        <option selected disabled>Zmień rok</option>
+        <option *ngFor="let year of years" [value]="year">{{year}}</option>
+      </select>
+    </div>
+    
+    <p-chart type="line" [data]="data"></p-chart>
+  </div>
+
+  <div class="chart mt-3">
+    <p-chart type="pie" [data]="pieData"></p-chart>
+  </div>
+</div>
