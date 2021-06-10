@@ -1,72 +1,108 @@
-<div class="container">
-  <p-table #dt [value]="customers" [rows]="5" [paginator]="true" [globalFilterFields]="['name']"
-      [rowHover]="true" dataKey="id"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+<div class="container mt-2">
+  <p-table #dt [value]="users" [rows]="5" [paginator]="true" [globalFilterFields]="['email, userName']"
+    [rowHover]="true" dataKey="id" [responsive]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+    <ng-template pTemplate="caption">
+      <div class="d-flex justify-content-between">
+        <button pButton pRipple label="Dodaj" icon="pi pi-plus" class="p-button-success p-mr-2"
+          (click)="createUser()"></button>
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" (input)="applyFilterGlobal($event, 'contains')" placeholder="Wyszukaj.." />
+        </span>
+      </div>
+    </ng-template>
 
-      <ng-template pTemplate="caption">
-          <div class="d-flex justify-content-between">
-            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
-              <span class="p-input-icon-left">
-                  <i class="pi pi-search"></i>
-                  <input pInputText type="text" (input)="applyFilterGlobal($event, 'contains')" placeholder="Filter" />
-              </span>
-          </div>
-      </ng-template>
-      
-      <ng-template pTemplate="header">
-          <tr>
-              <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
-              <th pSortableColumn="country.name">Country <p-sortIcon field="country.name"></p-sortIcon></th>
-              <th pSortableColumn="date">Date <p-sortIcon field="date"></p-sortIcon></th>
-              <th></th>
-          </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-customer>
-          <tr>
-              <td class="p-fluid">{{ customer.name}}</td>
-              <td class="p-fluid">{{ customer.country.name }}</td>
-              <td class="p-fluid">{{ customer.date | date: "dd.MM.yyyy HH:mm:ss" }}</td>
-              <td>
-                  <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editProduct(customer)"></button>
-                  <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(customer)"></button>
-              </td>
-          </tr>
-      </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="userName">Nick <p-sortIcon field="userName"></p-sortIcon>
+        </th>
+        <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon>
+        </th>
+        <th pSortableColumn="emailConfirmed">Potwierdzione<p-sortIcon field="emailConfirmed"></p-sortIcon>
+        </th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user>
+      <tr>
+        <td class="p-fluid">
+          <span class="p-column-title">Nick</span>
+          {{ user.userName}}
+        </td>
+        <td class="p-fluid">
+          <span class="p-column-title">Email</span>
+          {{ user.email }}
+        </td>
+        <td class="p-fluid">
+          <span class="p-column-title">Potwierdzione</span>
+          <i class="pi"
+            [ngClass]="{'true-icon pi-check-circle': user.emailConfirmed, 'false-icon pi-times-circle': !user.emailConfirmed}"></i>
+        </td>
+
+        <td>
+          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"
+            (click)="editUser(user)"></button>
+          <button pButton pRipple icon="pi pi-trash" class="mx-2 p-button-rounded p-button-warning"
+            (click)="deleteUser(user)"></button>
+        </td>
+      </tr>
+    </ng-template>
   </p-table>
 </div>
-<p-dialog [(visible)]="productDialog" [style]="{width: '50vw'}" header="Product Details" [modal]="true" styleClass="p-fluid">
-    <ng-template pTemplate="content">
-        <div *ngIf="!!customer.id; else createUser">
-            EDYCJA
+<p-dialog [(visible)]="productDialog" [style]="{width: '50vw'}" header="" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <div *ngIf="!!selectedUser; else createUser">
+      <form [formGroup]="updateForm" (ngSubmit)="updateUserSubmit(updateForm)">
+        <div>
+          <label for="userNameInput" class="form-label">Nick</label>
+          <input id="userNameInput" class="form-control" formControlName="userName" placeholder="nick..">
         </div>
-        <ng-template #createUser>
-            NOWY
-
-        </ng-template>
-    </ng-template>
-    
-    <ng-template pTemplate="footer">
-        <div class="d-flex justify-content-around">
-            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-            <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveCustomer()"></button>
+        <div class="mt-2">
+          <label for="emailInput" class="form-label">Email</label>
+          <input id="emailInput" class="form-control" formControlName="email" placeholder="email..">
         </div>
+        <div class="mt-2">
+          <label for="passwordInput" class="form-label">Has&#322;o</label>
+          <input id="passwordInput" class="form-control" formControlName="password" placeholder="has&#322;o..">
+        </div>
+        <div class="mt-2">
+          <button class="btn btn-primary" [disabled]="updateForm.invalid" type="submit">Dodaj</button>
+        </div>
+      </form>
+    </div>
+    <ng-template #createUser>
+      <form [formGroup]="createForm" (ngSubmit)="createUserSubmit(createForm)">
+        <div>
+          <label for="userNameInput" class="form-label">Nick</label>
+          <input id="userNameInput" class="form-control" formControlName="userName" placeholder="nick..">
+          <div class="form-text"
+            *ngIf="createForm.get('userName')?.invalid && (createForm.get('userName')?.dirty || createForm.get('userName')?.touched)">
+            Nick jest wymagany.
+          </div>
+        </div>
+        <div class="mt-2">
+          <label for="emailInput" class="form-label">Email</label>
+          <input id="emailInput" class="form-control" formControlName="email" placeholder="email..">
+          <div class="form-text"
+            *ngIf="createForm.get('email')?.invalid && (createForm.get('email')?.dirty || createForm.get('email')?.touched)">
+            Email jest wymagany.
+          </div>
+        </div>
+        <div class="mt-2">
+          <label for="passwordInput" class="form-label">Has&#322;o</label>
+          <input id="passwordInput" class="form-control" formControlName="password" placeholder="has&#322;o..">
+          <div
+            *ngIf="createForm.get('password')?.invalid && (createForm.get('password')?.dirty || createForm.get('password')?.touched)">
+            Has&#322;o jest wymagane.
+          </div>
+        </div>
+        <div class="mt-2">
+          <button class="btn btn-primary" [disabled]="createForm.invalid" type="submit">Dodaj</button>
+        </div>
+      </form>
     </ng-template>
+  </ng-template>
 </p-dialog>
 
 <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
-
-<!-- <div class="p-field">
-    <label for="name">Name</label>
-    <input type="text" pInputText id="name" [(ngModel)]="customer.name" required autofocus />
-    <small class="p-invalid" *ngIf="submitted && !customer.name">Name is required.</small>
-</div>
-<div class="p-field">
-    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-        Utw&#243;rz nowe has&#322;o
-      </button>
-      <div class="collapse" id="collapseExample">
-        <div class="card card-body">
-            <p-password [(ngModel)]="customer.status" [toggleMask]="true"></p-password>
-        </div>
-      </div>
-</div> -->
