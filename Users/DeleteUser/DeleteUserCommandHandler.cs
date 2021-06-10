@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using MusicApp.Data;
+using MusicApp.IdentityData;
 
 namespace MusicApp.Users.DeleteUser
 {

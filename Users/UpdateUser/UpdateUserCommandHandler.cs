@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using MusicApp.Data;
+using MusicApp.IdentityData;
 using MusicApp.Users.CreateUser;
 
 namespace MusicApp.Users.UpdateUser

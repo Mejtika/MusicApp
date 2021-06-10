@@ -1,5 +1,5 @@
 ﻿@using MusicApp.Areas.Identity.Pages.Account.Manage
-@using MusicApp.Data
+@using MusicApp.IdentityData
 @inject SignInManager<ApplicationUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();

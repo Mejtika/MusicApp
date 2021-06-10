@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace MusicApp.Data.Migrations
+namespace MusicApp.IdentityData.Migrations
 {
     public partial class Initial : Migration
     {

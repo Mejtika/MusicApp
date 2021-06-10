@@ -10,11 +10,11 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
-using MusicApp.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MusicApp.Data.MusicApp.Data;
+using MusicApp.IdentityData;
+using MusicApp.IdentityData.MusicApp.Data;
 
 namespace MusicApp
 {

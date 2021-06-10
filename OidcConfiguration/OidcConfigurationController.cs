@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace MusicApp.Controllers
+namespace MusicApp.OidcConfiguration
 {
     public class OidcConfigurationController : Controller
     {

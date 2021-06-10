@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using MusicApp.Data;
+using MusicApp.IdentityData;
 
 namespace MusicApp.Areas.Identity.Pages.Account
 {
