@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using MusicApp.Models;
+using MusicApp.Data;
 
 namespace MusicApp.Users.GetUser
 {

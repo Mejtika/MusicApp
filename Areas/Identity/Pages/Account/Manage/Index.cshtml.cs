@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using MusicApp.Models;
+using MusicApp.Data;
 
 namespace MusicApp.Areas.Identity.Pages.Account.Manage
 {
