@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using IdentityServer4.Models;
+using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,6 +32,7 @@ namespace MusicApp
         {
             services.AddScoped<IdentityDataSeeder>();
             services.AddHostedService<SetupIdentityDataSeeder>();
+            services.AddMediatR(typeof(Startup).Assembly);
 
             services.AddDbContext<IdentityDbContext>(options =>
                 options.UseSqlServer(
@@ -63,6 +65,24 @@ namespace MusicApp
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Events.OnRedirectToLogin = context =>
+                {
+                    if (context.Request.Path.Value.StartsWith("/api"))
+                    {
+                        context.Response.Headers["Location"] = context.RedirectUri;
+                        context.Response.StatusCode = 401;
+                    }
+                    else
+                    {
+                        context.Response.Redirect(context.RedirectUri);
+                    }
+                    return Task.CompletedTask;
+                };
+            });
+
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddSpaStaticFiles(configuration =>
