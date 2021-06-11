@@ -13,9 +13,9 @@ namespace MusicApp.MusicData
 
         public DbSet<RadioChannel> RadioChannels { get; set; }
 
-        public DbSet<CountByYear> CountByYear { get; set; }
+        public DbSet<CountByYearView> CountByYearView { get; set; }
 
-        public DbSet<CountByChannel> CountByChannel { get; set; }
+        public DbSet<CountByChannelView> CountByChannelView { get; set; }
 
         public MusicDataDbContext(DbContextOptions<MusicDataDbContext> options) : base(options)
         {
@@ -27,14 +27,14 @@ namespace MusicApp.MusicData
             modelBuilder.HasDefaultSchema("music");
 
             modelBuilder
-                .Entity<CountByYear>(eb =>
+                .Entity<CountByYearView>(eb =>
                 {
                     eb.HasNoKey();
                     eb.ToView("vCountByYear");
                 });
 
             modelBuilder
-                .Entity<CountByChannel>(eb =>
+                .Entity<CountByChannelView>(eb =>
                 {
                     eb.HasNoKey();
                     eb.ToView("vCountByChannel");

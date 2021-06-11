@@ -3,7 +3,7 @@
 namespace MusicApp.MusicData.Views
 {
     [Keyless]
-    public class CountByYear
+    public class CountByYearView
     {
         public int SongId { get; set; }
         public int Month { get; set; }

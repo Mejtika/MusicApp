@@ -28,7 +28,7 @@ namespace MusicApp.Songs.GetYearsReport
 
         public async Task<IReadOnlyList<YearReportDto>> Handle(GetYearsReportQuery request, CancellationToken cancellationToken)
         {
-            var emissions = await _context.CountByYear
+            var emissions = await _context.CountByYearView
                 .Where(x => x.SongId == request.SongId)
                 .ToListAsync(cancellationToken);
 
@@ -43,7 +43,7 @@ namespace MusicApp.Songs.GetYearsReport
             return filledList.OrderBy(x => x.Year).ToImmutableList();
         }
 
-        private static Dictionary<int, int[]> GroupByYear(List<CountByYear> emissions)
+        private static Dictionary<int, int[]> GroupByYear(List<CountByYearView> emissions)
         {
             return emissions
                 .GroupBy(x => x.Year)

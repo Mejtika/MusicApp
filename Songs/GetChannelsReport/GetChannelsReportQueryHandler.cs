@@ -19,7 +19,7 @@ namespace MusicApp.Songs.GetChannelsReport
 
         public async Task<IReadOnlyList<ChannelReportDto>> Handle(GetChannelsReportQuery request, CancellationToken cancellationToken)
         {
-            return await _context.CountByChannel
+            return await _context.CountByChannelView
                 .Where(x => x.SongId == request.SongId)
                 .Select(x => new ChannelReportDto {Name = x.Name, Count = x.Count})
                 .ToListAsync(cancellationToken); ;
