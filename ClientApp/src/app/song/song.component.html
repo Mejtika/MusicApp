@@ -1,16 +1,20 @@
 <div class="container">
-  <div class="chart mt-3">
-    <div class="d-flex justify-content-center w-25">
-      <select #mySelect class="form-select" aria-label="Default select example" (change)="changeYear(mySelect.value)">
-        <option selected disabled>Zmień rok</option>
-        <option *ngFor="let year of years" [value]="year">{{year}}</option>
-      </select>
-    </div>
-    
-    <p-chart type="line" [data]="data"></p-chart>
+  <div class="mt-3">
+    <ng-container *ngIf="(song$ | async) as song;">
+      <app-song-details [song]=song>
+      </app-song-details>
+    </ng-container>
   </div>
-
-  <div class="chart mt-3">
-    <p-chart type="pie" [data]="pieData"></p-chart>
+  <div class="mt-3">
+    <ng-container *ngIf="(yearsReport$ | async) as yearsReport;">
+      <app-years-report [yearsReport]="yearsReport" [labels]="yearsReportLabels">
+      </app-years-report>
+    </ng-container>
+  </div>
+  <div class="mt-3">
+    <ng-container *ngIf="(channelsReport$ | async) as channelsReport;">
+      <app-channels-report [channelsReport]="channelsReport">
+      </app-channels-report>
+    </ng-container>
   </div>
 </div>

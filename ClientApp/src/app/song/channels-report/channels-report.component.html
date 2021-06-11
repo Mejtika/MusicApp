@@ -1,0 +1,12 @@
+<p-panel header="Liczba odtworzeń według kanałów">
+  <ng-container *ngIf="channelsReport.length === 0; else chartTemplate">
+    <div class="d-flex justify-content-center">
+      <strong>BRAK INFORMACJI</strong>
+    </div>
+  </ng-container>
+  <ng-template #chartTemplate>
+    <div class="chart mt-3">
+      <p-chart type="pie" [data]="chartData"></p-chart>
+    </div>
+  </ng-template>
+</p-panel>

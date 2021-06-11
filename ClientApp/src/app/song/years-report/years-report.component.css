@@ -1,0 +1,9 @@
+.changer {
+  width: 25vh;
+}
+
+@media only screen and (max-width: 650px) {
+  .changer {
+    width: 20vh;
+  }
+}

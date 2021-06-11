@@ -1,0 +1,35 @@
+<ng-container *ngIf="song == null; else songTemplate">
+  <p-panel header="Informacje o utworze">
+    <div class="d-flex justify-content-center">
+      <strong>BRAK INFORMACJI</strong>
+    </div>
+  </p-panel>
+</ng-container>
+<ng-template #songTemplate>
+  <p-tabView>
+    <p-tabPanel header="Utwór">
+      <p>
+        <strong>Tytuł:</strong> {{song?.title}}
+      </p>
+      <p>
+        <strong>Wersja:</strong> {{song?.version}}
+      </p>
+      <p>
+        <strong>Czas trwania:</strong> {{moment.duration(song?.duration).format('mm:ss')}}
+      </p>
+    </p-tabPanel>
+    <p-tabPanel header="Artysta">
+      <div *ngFor="let artist of song?.artists" class="mb-2">
+        <p>
+          <strong>Pseudonim:</strong> {{artist?.pseudonym}}
+        </p>
+        <p>
+          <strong>Imię i nazwisko:</strong> {{artist?.name}}
+        </p>
+        <p>
+          <strong>Data urodzenia:</strong> {{moment(artist?.born).format('DD/MM/YYYY')}}
+        </p>
+      </div>
+    </p-tabPanel>
+  </p-tabView>
+</ng-template>

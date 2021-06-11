@@ -1,0 +1,18 @@
+<p-panel header="Liczba odtworzeń według roku">
+  <ng-container *ngIf="yearsReport.length === 0; else chartTemplate">
+    <div class="d-flex justify-content-center">
+      <strong>BRAK INFORMACJI</strong>
+    </div>
+  </ng-container>
+  <ng-template #chartTemplate>
+    <div class="chart">
+      <div class="d-flex justify-content-center changer">
+        <select #mySelect class="form-select" aria-label="Default select example" (change)="display(mySelect.value)">
+          <option selected disabled>Zmień rok</option>
+          <option *ngFor="let year of years" [value]="year">{{year}}</option>
+        </select>
+      </div>
+      <p-chart type="line" [data]="chartData" [options]="options"></p-chart>
+    </div>
+  </ng-template>
+</p-panel>
