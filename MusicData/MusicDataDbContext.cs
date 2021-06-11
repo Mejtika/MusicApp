@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using MusicApp.MusicData.Views;
 
 namespace MusicApp.MusicData
 {
@@ -14,8 +11,11 @@ namespace MusicApp.MusicData
 
         public DbSet<Emission> Emissions { get; set; }
 
-
         public DbSet<RadioChannel> RadioChannels { get; set; }
+
+        public DbSet<CountByYear> CountByYear { get; set; }
+
+        public DbSet<CountByChannel> CountByChannel { get; set; }
 
         public MusicDataDbContext(DbContextOptions<MusicDataDbContext> options) : base(options)
         {
@@ -25,6 +25,20 @@ namespace MusicApp.MusicData
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.HasDefaultSchema("music");
+
+            modelBuilder
+                .Entity<CountByYear>(eb =>
+                {
+                    eb.HasNoKey();
+                    eb.ToView("vCountByYear");
+                });
+
+            modelBuilder
+                .Entity<CountByChannel>(eb =>
+                {
+                    eb.HasNoKey();
+                    eb.ToView("vCountByChannel");
+                });
         }
     }
 }

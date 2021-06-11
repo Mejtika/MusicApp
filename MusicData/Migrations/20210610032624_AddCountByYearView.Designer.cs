@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MusicApp.MusicData;
 
 namespace MusicApp.MusicData.Migrations
 {
     [DbContext(typeof(MusicDataDbContext))]
-    partial class MusicDataDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210610032624_AddCountByYearView")]
+    partial class AddCountByYearView
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
