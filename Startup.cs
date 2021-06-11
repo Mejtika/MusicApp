@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using IdentityServer4.Models;
 using MediatR;
@@ -88,7 +89,9 @@ namespace MusicApp
                 };
             });
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
             services.AddRazorPages();
             services.AddSpaStaticFiles(configuration =>
             {
