@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SongsComponent } from './songs.component';
+import { EmissionsComponent } from './emissions.component';
 import { RouterModule, Routes } from '@angular/router';
-
 import {TableModule} from 'primeng/table';
 import {ToastModule} from 'primeng/toast';
 import {CalendarModule} from 'primeng/calendar';
@@ -19,7 +18,7 @@ import { FormsModule } from '@angular/forms';
 const routes: Routes = [
   {
       path: "",
-      component: SongsComponent
+      component: EmissionsComponent
   }
 ];
 
@@ -40,6 +39,6 @@ const routes: Routes = [
     ProgressBarModule,
     FormsModule
   ],
-  declarations: [SongsComponent]
+  declarations: [EmissionsComponent]
 })
-export class SongsModule { }
+export class EmissionsModule { }

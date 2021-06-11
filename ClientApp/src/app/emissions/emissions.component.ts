@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as FileSaver from 'file-saver';
@@ -31,11 +30,11 @@ export interface Customer {
 }
 
 @Component({
-  selector: 'app-songs',
-  templateUrl: './songs.component.html',
-  styleUrls: ['./songs.component.css'],
+  selector: 'app-emissions',
+  templateUrl: './emissions.component.html',
+  styleUrls: ['./emissions.component.css'],
 })
-export class SongsComponent implements OnInit {
+export class EmissionsComponent implements OnInit {
   customers: Customer[] = [
     {
       id: 1000,
@@ -420,7 +419,7 @@ export class SongsComponent implements OnInit {
 
   onRowSelect(event: any) {
     console.log(event.data);
-    this.router.navigateByUrl('/ranking');
+    this.router.navigateByUrl('/songs/2');
   }
 
   exportExcel() {

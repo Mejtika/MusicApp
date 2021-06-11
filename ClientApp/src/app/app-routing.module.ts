@@ -5,13 +5,13 @@ import { LazyAuthorizeGuard } from 'src/api-authorization/lazy-authorize.guard';
 import { PermissionGuard } from 'src/api-authorization/permission.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'songs', pathMatch: 'full' },
+  { path: '', redirectTo: 'emissions', pathMatch: 'full' },
   {
-    path: 'songs',
+    path: 'emissions',
     canLoad: [LazyAuthorizeGuard],
     canActivate: [AuthorizeGuard],
     loadChildren: () =>
-      import('./songs/songs.module').then((module) => module.SongsModule),
+      import('./emissions/emissions.module').then((module) => module.EmissionsModule),
   },
   {
     path: 'songs/:id',
