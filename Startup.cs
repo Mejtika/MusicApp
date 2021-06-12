@@ -7,12 +7,17 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OData.Edm;
+using Microsoft.OData.ModelBuilder;
+using Microsoft.VisualBasic;
 using MusicApp.IdentityData;
 using MusicApp.MusicData;
+using MusicApp.MusicData.Views;
 
 namespace MusicApp
 {
@@ -32,6 +37,12 @@ namespace MusicApp
             services.AddScoped<MusicDataSeeder>();
             services.AddHostedService<SetupMusicDataSeeder>();
             services.AddMediatR(typeof(Startup).Assembly);
+            services.AddOData(options =>
+            {
+                options.MaxTop = 100;
+                options.Filter().OrderBy().Count().AddModel("odata", GetEdmModel());
+            });
+
 
             services.AddDbContext<IdentityDbContext>(options =>
                 options.UseSqlServer(
@@ -177,5 +188,14 @@ namespace MusicApp
                 }
             });
         }
+
+        private static IEdmModel GetEdmModel()
+        {
+            var builder = new ODataConventionModelBuilder();
+            var emissions = builder.EntitySet<EmissionsView>("Emissions").EntityType;
+            emissions.Property(x => x.Duration).AsTimeOfDay();
+            return builder.GetEdmModel();
+        }
+
     }
 }
