@@ -3,7 +3,13 @@
   [loading]="loading" styleClass="p-datatable-gridlines" [showCurrentPageReport]="true"
   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="rowsPerPageOptions">
   <ng-template pTemplate="caption">
-    <button class="ui-button-success" (click)="exportToExcel()"><i class="bi bi-file-earmark-spreadsheet"></i></button>
+    <ng-container *ngIf="!excelLoader; else loading">
+      <span class="excelContainer" (click)="exportToExcel()"><i class="fs-2 bi bi-file-earmark-excel-fill excel"></i></span>
+    </ng-container>
+    <ng-template #loading>
+      <p-progressSpinner [style]="{width: '25px', height: '25px'}"></p-progressSpinner>
+    </ng-template>
+    
   </ng-template>
 
   <ng-template pTemplate="header">

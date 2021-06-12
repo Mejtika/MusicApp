@@ -36,6 +36,7 @@ export class EmissionsComponent {
   rowsPerPageOptions: number[] = [5, 10, 15];
   rows: number = 10;
   filters: string = '';
+  excelLoader: boolean = false;
 
   constructor(
     private router: Router,
@@ -55,15 +56,19 @@ export class EmissionsComponent {
     this.emissionsService.get(this.getQueryParams($event));
   }
 
-  exportExcel(emissions: Emission[]) {
-    import('xlsx').then((xlsx) => {
-      const worksheet = xlsx.utils.json_to_sheet(emissions);
-      const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
-      const excelBuffer: any = xlsx.write(workbook, {
-        bookType: 'xlsx',
-        type: 'array',
+  exportExcel() {
+    this.excelLoader = true;
+    this.emissionsService.getForExcel(this.filters).subscribe((result) => {
+      const emissions: Emission[] = result.value;
+      import('xlsx').then((xlsx) => {
+        const worksheet = xlsx.utils.json_to_sheet(emissions);
+        const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
+        const excelBuffer: any = xlsx.write(workbook, {
+          bookType: 'xlsx',
+          type: 'array',
+        });
+        this.saveAsExcelFile(excelBuffer, 'customers');
       });
-      this.saveAsExcelFile(excelBuffer, 'customers');
     });
   }
 
@@ -74,6 +79,7 @@ export class EmissionsComponent {
     const data: Blob = new Blob([buffer], {
       type: EXCEL_TYPE,
     });
+    this.excelLoader = false;
     FileSaver.saveAs(
       data,
       fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION

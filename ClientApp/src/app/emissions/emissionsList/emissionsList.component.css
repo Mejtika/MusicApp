@@ -17,3 +17,16 @@
 .btns {
   margin-bottom: -20px !important;
 }
+
+.excel {
+  background: -webkit-linear-gradient(#e1423a, #181615);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.excel:hover {
+  background: -webkit-linear-gradient(#ca7975, #717070);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  cursor: pointer;
+}

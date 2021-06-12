@@ -1,8 +1,8 @@
-<div class="container">
+<div class="container mt-2">
   <ng-container *ngIf="(pagedEmissions$ | async) as pagedEmissions;">
     <app-emissionsList [textModeOptions]="textModeOptions" [dateModeOptions]="dateModeOptions"
       [durationModeOptions]="durationModeOptions" [pagedEmissions]="pagedEmissions" [loading]="(loadingEmissions$ | async)!" (loaded)="loadEmissions($event)"
-      (rowSelected)="onRowSelect($event)" (exported)="exportExcel($event)"
+      [excelLoader]="excelLoader" (rowSelected)="onRowSelect($event)" (exported)="exportExcel()"
       [rows]="rows" [rowsPerPageOptions]="rowsPerPageOptions">
     </app-emissionsList>
   </ng-container>

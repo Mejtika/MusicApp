@@ -13,18 +13,18 @@ export class EmissionsService {
   public pagedEmissions$ = this.pagedEmissions.asObservable();
   public loadingEmissions$ = this.loadingEmissions.asObservable();
 
-  public async get(params: string) {
-    console.log(params);
+  public get(params: string) {
     this.loadingEmissions.next(true);
-    this.http
-      .get<any>(`odata/emissions?${params}`)
-      .subscribe((result) => {
-        const pagedResult: PagedResult = {
-          value: result.value,
-          count: result['@odata.count'],
-        };
-        this.pagedEmissions.next(pagedResult);
-        this.loadingEmissions.next(false);
-      });
+    this.http.get<any>(`odata/emissions?${params}`).subscribe((result) => {
+      const pagedResult: PagedResult = {
+        value: result.value,
+        count: result['@odata.count'],
+      };
+      this.pagedEmissions.next(pagedResult);
+      this.loadingEmissions.next(false);
+    });
+  }
+  public getForExcel(params: string) {
+    return this.http.get<any>(`odata/emissions?${params}`);
   }
 }

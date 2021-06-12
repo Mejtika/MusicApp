@@ -16,6 +16,7 @@ import {InputTextModule} from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { EmissionsListComponent } from './emissionsList/emissionsList.component';
 import { EmissionsService } from '../services/emissions/emissions.service';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 
 const routes: Routes = [
   {
@@ -39,7 +40,8 @@ const routes: Routes = [
 		ToastModule,
     InputTextModule,
     ProgressBarModule,
-    FormsModule
+    FormsModule,
+    ProgressSpinnerModule
   ],
   declarations: [EmissionsComponent, EmissionsListComponent],
   providers: [EmissionsService]

@@ -23,6 +23,7 @@ export class EmissionsListComponent {
   @Input() durationModeOptions: SelectItem[] = [];
   @Input() rows: number = 0;
   @Input() rowsPerPageOptions: number[] = [];
+  @Input() excelLoader: boolean = false;
   @Output() loaded = new EventEmitter();
   @Output() rowSelected = new EventEmitter();
   @Output() exported = new EventEmitter();
@@ -34,6 +35,6 @@ export class EmissionsListComponent {
   }
 
   exportToExcel() {
-    this.exported.emit(this.emissions);
+    this.exported.emit();
   }
 }
