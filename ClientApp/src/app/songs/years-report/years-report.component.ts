@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { YearReport } from 'src/app/services/song/interfaces';
+import { YearReport } from 'src/app/services/songs/interfaces';
 
 @Component({
   selector: 'app-years-report',

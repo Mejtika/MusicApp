@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ChannelReport } from '../../services/song/interfaces';
+import { ChannelReport } from '../../services/songs/interfaces';
 
 @Component({
   selector: 'app-channels-report',

@@ -18,7 +18,7 @@ const routes: Routes = [
     canLoad: [LazyAuthorizeGuard],
     canActivate: [AuthorizeGuard],
     loadChildren: () =>
-      import('./song/song.module').then((module) => module.SongModule),
+      import('./songs/songs.module').then((module) => module.SongsModule),
   },
   {
     path: 'ranking',

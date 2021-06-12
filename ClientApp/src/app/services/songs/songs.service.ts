@@ -3,10 +3,8 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { YearReport, ChannelReport, Song } from './interfaces';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class SongService {
+@Injectable()
+export class SongsService {
   constructor(private http: HttpClient) {}
   private yearsReport = new Subject<YearReport[]>();
   private channelsReport = new Subject<ChannelReport[]>();

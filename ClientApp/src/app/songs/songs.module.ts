@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SongComponent } from './song.component';
+import { SongsComponent } from './songs.component';
 import { RouterModule, Routes } from '@angular/router';
 import { ChartModule } from 'primeng/chart';
-import { SongService } from '../services/song/song.service';
+import { SongsService } from '../services/songs/songs.service';
 import { YearsReportComponent } from './years-report/years-report.component';
 import { ChannelsReportComponent } from './channels-report/channels-report.component';
 import { PanelModule } from 'primeng/panel';
@@ -13,7 +13,7 @@ import { SongDetailsComponent } from './song-details/song-details.component';
 const routes: Routes = [
   {
     path: '',
-    component: SongComponent,
+    component: SongsComponent,
   },
 ];
 
@@ -26,11 +26,11 @@ const routes: Routes = [
     TabViewModule,
   ],
   declarations: [
-    SongComponent,
+    SongsComponent,
     YearsReportComponent,
     ChannelsReportComponent,
     SongDetailsComponent,
   ],
-  providers: [SongService],
+  providers: [SongsService],
 })
-export class SongModule {}
+export class SongsModule {}

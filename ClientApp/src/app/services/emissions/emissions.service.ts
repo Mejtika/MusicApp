@@ -3,9 +3,7 @@ import { Injectable } from '@angular/core';
 import { Emission, PagedResult } from './interfaces';
 import { Subject, BehaviorSubject } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class EmissionsService {
   constructor(private http: HttpClient) {}
   private pagedEmissions = new Subject<PagedResult>();

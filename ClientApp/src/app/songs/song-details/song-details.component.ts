@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Song } from '../../services/song/interfaces';
+import { Song } from '../../services/songs/interfaces';
 
 import 'moment-duration-format';
 import * as moment from 'moment';
