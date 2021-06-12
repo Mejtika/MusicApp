@@ -15,7 +15,7 @@
         <strong>Wersja:</strong> {{song?.version}}
       </p>
       <p>
-        <strong>Czas trwania:</strong> {{moment.duration(song?.duration).format('mm:ss')}}
+        <strong>Czas trwania:</strong> {{moment(song?.duration, [moment.ISO_8601, 'HH:mm:ss']).format('HH:mm:ss')}}
       </p>
     </p-tabPanel>
     <p-tabPanel header="Artysta">
