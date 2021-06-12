@@ -94,7 +94,7 @@ export class LoginComponent implements OnInit {
   private async navigateToReturnUrl(returnUrl: string) {
     // It's important that we do a replace here so that we remove the callback uri with the
     // fragment containing the tokens from the browser history.
-    await this.router.navigateByUrl("/songs", { replaceUrl: true });
+    await this.router.navigateByUrl("/emissions", { replaceUrl: true });
   }
 
   private getReturnUrl(state?: INavigationState): string {

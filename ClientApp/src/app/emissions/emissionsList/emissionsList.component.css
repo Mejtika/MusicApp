@@ -1,0 +1,19 @@
+::ng-deep .p-column-filter-overlay-menu .p-column-filter-buttonbar {
+  padding: 0 !important;
+}
+
+::ng-deep .p-column-filter-buttonbar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-around !important;
+  margin: 0 -5px 0 -5px !important;
+  padding: 0 !important;
+}
+
+::ng-deep .p-column-filter-overlay-menu {
+  padding: 10px !important;
+}
+
+.btns {
+  margin-bottom: -20px !important;
+}

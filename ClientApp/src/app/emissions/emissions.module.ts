@@ -14,6 +14,8 @@ import {DropdownModule} from 'primeng/dropdown';
 import {ProgressBarModule} from 'primeng/progressbar';
 import {InputTextModule} from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
+import { EmissionsListComponent } from './emissionsList/emissionsList.component';
+import { EmissionsService } from '../services/emissions/emissions.service';
 
 const routes: Routes = [
   {
@@ -39,6 +41,7 @@ const routes: Routes = [
     ProgressBarModule,
     FormsModule
   ],
-  declarations: [EmissionsComponent]
+  declarations: [EmissionsComponent, EmissionsListComponent],
+  providers: [EmissionsService]
 })
 export class EmissionsModule { }

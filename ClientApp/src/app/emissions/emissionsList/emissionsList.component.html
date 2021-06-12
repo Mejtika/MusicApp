@@ -1,0 +1,80 @@
+<p-table selectionMode="single" (onRowSelect)="rowSelected.emit($event)" [lazy]=true (onLazyLoad)="onLoad($event)"
+  [value]="emissions" [responsive]=false [paginator]="true" [rows]="rows" [totalRecords]="totalRecords"
+  [loading]="loading" styleClass="p-datatable-gridlines" [showCurrentPageReport]="true"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="rowsPerPageOptions">
+  <ng-template pTemplate="caption">
+    <button class="ui-button-success" (click)="exportToExcel()"><i class="bi bi-file-earmark-spreadsheet"></i></button>
+  </ng-template>
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th>
+        <div class="d-flex justify-content-between align-items-center">
+          <div pSortableColumn="ChannelName">
+            Kana&#322; <p-sortIcon field="ChannelName"></p-sortIcon>
+          </div>
+          <div>
+            <p-columnFilter type="text" field="ChannelName" [matchModeOptions]="textModeOptions" display="menu"
+              [showOperator]="false" [showAddButton]="false">
+            </p-columnFilter>
+          </div>
+        </div>
+      </th>
+
+      <th>
+        <div class="d-flex justify-content-between align-items-center">
+          <div pSortableColumn="SongTitle">
+            Utw&#243;r <p-sortIcon field="SongTitle"></p-sortIcon>
+          </div>
+          <div>
+            <p-columnFilter type="text" field="SongTitle" [matchModeOptions]="textModeOptions" display="menu"
+              [showOperator]="false" [showAddButton]="false">
+            </p-columnFilter>
+          </div>
+        </div>
+      </th>
+
+      <th>
+        <div class="d-flex justify-content-between align-items-center">
+          <div pSortableColumn="EmittedOn">
+            Data <p-sortIcon field="EmittedOn"></p-sortIcon>
+          </div>
+          <div>
+            <p-columnFilter type="date" field="EmittedOn"[matchModeOptions]="dateModeOptions"  [showOperator]="false" [showAddButton]="false" display="menu"></p-columnFilter>
+          </div>
+        </div>
+      </th>
+
+      <th>
+        <div class="d-flex justify-content-between align-items-center">
+          <div pSortableColumn="Duration">
+            Czas trwania <p-sortIcon field="Duration"></p-sortIcon>
+          </div>
+          <div>
+            <p-columnFilter type="numeric" field="Duration" [matchModeOptions]="durationModeOptions" display="menu"
+              [showMatchModes]="true" [showOperator]="false" [showAddButton]="false" [showClearButton]="false"
+              [showApplyButton]="false">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <input pInputText #durationInput id="durationinput" type="text" placeholder="HH:MM:SS"
+                  [ngModel]="value" title="Write a duration in the format hh:mm:ss">
+                <div class="btns d-flex justify-content-between mt-4 w-100">
+                  <p-button label="Clear" styleClass="p-button-outlined" (onClick)="filter(undefined)"></p-button>
+                  <p-button label="Apply" (onClick)="filter(durationInput.value)"></p-button>
+                </div>
+              </ng-template>
+            </p-columnFilter>
+          </div>
+        </div>
+      </th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-emission>
+    <tr [pSelectableRow]="emission">
+      <td class="p-fluid">{{ emission.ChannelName }}</td>
+      <td class="p-fluid">{{ emission.SongTitle }}</td>
+      <td class="p-fluid">{{ emission.EmittedOn | date: "dd.MM.yyyy HH:mm:ss" }}</td>
+      <td class="p-fluid">{{moment(emission.Duration, [moment.ISO_8601, 'HH:mm:ss']).format('HH:mm:ss')}}</td>
+    </tr>
+  </ng-template>
+</p-table>
