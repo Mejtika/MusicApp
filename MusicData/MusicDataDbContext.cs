@@ -17,6 +17,8 @@ namespace MusicApp.MusicData
 
         public DbSet<CountByChannelView> CountByChannelView { get; set; }
 
+        public DbSet<EmissionsView> EmissionsView { get; set; }
+
         public MusicDataDbContext(DbContextOptions<MusicDataDbContext> options) : base(options)
         {
         }
@@ -38,6 +40,13 @@ namespace MusicApp.MusicData
                 {
                     eb.HasNoKey();
                     eb.ToView("vCountByChannel");
+                });
+
+            modelBuilder
+                .Entity<EmissionsView>(eb =>
+                {
+                    eb.HasKey(e => e.EmissionId);
+                    eb.ToView("vEmissions");
                 });
         }
     }
