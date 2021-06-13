@@ -30,6 +30,7 @@ export class EmissionsComponent {
     { label: 'Data po', value: FilterMatchMode.GREATER_THAN },
   ];
   durationModeOptions: SelectItem[] = [
+    { label: 'Data równa', value: 'eq' },
     { label: 'Czas mniejszy', value: FilterMatchMode.LESS_THAN },
     { label: 'Czas większy', value: FilterMatchMode.GREATER_THAN },
   ];
@@ -41,7 +42,7 @@ export class EmissionsComponent {
   constructor(
     private router: Router,
     private emissionsService: EmissionsService
-  ) {}
+  ) { }
 
   ngOnInit() {
     const initialValue = `$skip=0&$top=${this.rows}&count=true`;
@@ -176,8 +177,12 @@ export class EmissionsComponent {
       return '';
     }
 
+    const [hour, minute, second]: number[] = filterData.value
+      .split(':')
+      .map((time: string) => parseInt(time));
+
     if (filterData.matchMode === 'equals') {
-      return `${property} lt ${filterData.value} and`;
+      return `hour(${property}) eq ${hour} and minute(${property}) eq ${minute} and second(${property}) eq ${second} and`;
     }
 
     return `${property} ${filterData.matchMode} ${filterData.value} and`;
