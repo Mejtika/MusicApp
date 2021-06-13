@@ -74,11 +74,26 @@ namespace MusicApp.Tests
 
         public static Task ResetCheckpoint() => _checkpoint.Reset(_configuration.GetConnectionString("DefaultConnection"));
 
-        protected async Task AddApplicationUserAsync(ApplicationUser user)
+        public static async Task<string> AddApplicationUserAsync(ApplicationUser user)
         {
             using var scope = _scopeFactory.CreateScope();
             var userManager = scope.ServiceProvider.GetService<UserManager<ApplicationUser>>();
             await userManager.CreateAsync(user).ConfigureAwait(false);
+            return user.Id;
+        }
+
+        public static async Task<ApplicationUser> GetApplicationUserAsync(string userId)
+        {
+            using var scope = _scopeFactory.CreateScope();
+            var userManager = scope.ServiceProvider.GetService<UserManager<ApplicationUser>>();
+            return await userManager.FindByIdAsync(userId).ConfigureAwait(false);
+        }
+
+        public static async Task AddRoleAsync()
+        {
+            using var scope = _scopeFactory.CreateScope();
+            var roleManager = scope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
+            await roleManager.CreateAsync(new IdentityRole("User"));
         }
 
         public static async Task<TResponse> SendAsync<TResponse>(IRequest<TResponse> request)
