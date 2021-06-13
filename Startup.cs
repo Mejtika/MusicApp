@@ -62,6 +62,7 @@ namespace MusicApp
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
                 {
+                    options.User.AllowedUserNameCharacters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+/ ";
                     options.SignIn.RequireConfirmedAccount = false;
                     options.User.RequireUniqueEmail = true;
                 })

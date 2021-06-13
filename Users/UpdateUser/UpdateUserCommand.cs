@@ -10,13 +10,16 @@ namespace MusicApp.Users.UpdateUser
 
         public string Email { get; }
 
+        public bool EmailConfirmed { get; }
+
         public string Password { get; }
 
-        public UpdateUserCommand(string id, string userName, string email, string password)
+        public UpdateUserCommand(string id, string userName, string email, bool emailConfirmed, string password)
         {
             Id = id;
             UserName = userName;
             Email = email;
+            EmailConfirmed = emailConfirmed;
             Password = password;
         }
     }

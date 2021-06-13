@@ -37,6 +37,16 @@ namespace MusicApp.Users.UpdateUser
                 }
             }
 
+            if (request.EmailConfirmed != user.EmailConfirmed)
+            {
+                var emailToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                var confirmEmailResult = await _userManager.ConfirmEmailAsync(user, emailToken);
+                if (!confirmEmailResult.Succeeded)
+                {
+                    throw new InvalidOperationException("Cannot confirm user's email");
+                }
+            }
+
             if (!string.IsNullOrEmpty(request.UserName))
             {
                 var updateEmailResult = await _userManager.SetUserNameAsync(user, request.UserName);
@@ -48,8 +58,8 @@ namespace MusicApp.Users.UpdateUser
 
             if (!string.IsNullOrEmpty(request.Password))
             {
-                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var updatePasswordResult = await _userManager.ResetPasswordAsync(user, token, request.Password);
+                var passwordToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var updatePasswordResult = await _userManager.ResetPasswordAsync(user, passwordToken, request.Password);
                 if (!updatePasswordResult.Succeeded)
                 {
                     throw new InvalidOperationException("Cannot update user's password");

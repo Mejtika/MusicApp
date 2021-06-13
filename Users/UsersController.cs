@@ -49,7 +49,7 @@ namespace MusicApp.Users
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(string id, UpdateUserRequest request)
         {
-            var command = new UpdateUserCommand(id, request.UserName, request.Email, request.Password);
+            var command = new UpdateUserCommand(id, request.UserName, request.Email, request.EmailConfirmed, request.Password);
             await _mediator.Send(command);
             return NoContent();
         }
