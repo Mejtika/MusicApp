@@ -79,7 +79,7 @@
     <tr [pSelectableRow]="emission">
       <td class="p-fluid">{{ emission.ChannelName }}</td>
       <td class="p-fluid">{{ emission.SongTitle }}</td>
-      <td class="p-fluid">{{ emission.EmittedOn | date: "dd.MM.yyyy HH:mm:ss" }}</td>
+      <td class="p-fluid">{{ emission.EmittedOn | date: "MM/dd/yyyy HH:mm:ss" }}</td>
       <td class="p-fluid">{{moment(emission.Duration, [moment.ISO_8601, 'HH:mm:ss']).format('HH:mm:ss')}}</td>
     </tr>
   </ng-template>
