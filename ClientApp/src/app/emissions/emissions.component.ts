@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import * as FileSaver from 'file-saver';
 import { EmissionsService } from '../services/emissions/emissions.service';
-import { Emission } from '../services/emissions/interfaces';
 import {
   FilterMatchMode,
   FilterMetadata,
@@ -63,59 +61,9 @@ export class EmissionsComponent {
     this.emissionsService
       .getForExcel(`${this.filters}&${this.ordering}`)
       .subscribe((result) => {
-        let emissions: any = result.value;
-        emissions = emissions.map((e: any) => {
-          return {
-            ...e,
-            Duration: moment(e.Duration, [moment.ISO_8601, 'HH:mm:ss']).format(
-              'HH:mm:ss'
-            ),
-          };
-        });
-
-        emissions = emissions.map((e: any) => {
-          return { ...e, EmittedOn: moment(e.EmittedOn).format("MM/DD/YYYY HH:mm:ss") };
-        });
-        const header = {
-          header: [
-            'EmissionId',
-            'ChannelName',
-            'SongId',
-            'SongTitle',
-            'EmittedOn',
-            'Duration',
-          ],
-        };
-        import('xlsx').then((xlsx) => {
-          const worksheet = xlsx.utils.json_to_sheet(emissions, header);
-          const workbook = {
-            Sheets: { data: worksheet },
-            SheetNames: ['data'],
-          };
-          const excelBuffer: any = xlsx.write(workbook, {
-            bookType: 'xlsx',
-            type: 'array',
-          });
-          this.saveAsExcelFile(excelBuffer, 'emissions');
-        });
+        this.emissionsService.exportToExcel(result.value);
+        this.excelLoader = false;
       });
-  }
-
-  saveAsExcelFile(buffer: any, fileName: string): void {
-    let EXCEL_TYPE =
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-    let EXCEL_EXTENSION = '.xlsx';
-    const data: Blob = new Blob([buffer], {
-      type: EXCEL_TYPE,
-    });
-    this.excelLoader = false;
-    FileSaver.saveAs(
-      data,
-      fileName +
-        '_export_' +
-        moment().format('MM-DD-YYYY_hh:mm:ss').toString() +
-        EXCEL_EXTENSION
-    );
   }
 
   private getQueryParams($event: LazyLoadEvent) {
