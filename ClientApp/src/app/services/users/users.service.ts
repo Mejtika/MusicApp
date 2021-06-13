@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from './interfaces';
+import { User, UserForCreate, UserForUpdate } from './interfaces';
 
 @Injectable()
 export class UsersService {
@@ -10,11 +10,11 @@ export class UsersService {
     return this.http.get<User[]>("api/users");
   }
 
-  create(user: User) {
+  create(user: UserForCreate) {
     return this.http.post<string>("api/users", user);
   }
 
-  update(user: User) {
+  update(user: UserForUpdate) {
     return this.http.put(`api/users/${user.id}`, user);
   }
 

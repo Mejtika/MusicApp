@@ -1,0 +1,37 @@
+<div class="modal-header d-flex align-content-center">
+  <div class="fs-5 modal-title" id="modal-basic-title"><strong>Nowy użytkownik</strong></div>
+  <div aria-label="Close" (click)="activeModal.dismiss()">
+    <i class="close fs-5 bi bi-x-circle-fill"></i>
+  </div>
+</div>
+<div class="modal-body">
+  <form [formGroup]="createForm" (ngSubmit)="createUserSubmit(createForm)">
+    <div>
+      <label for="userNameInput" class="form-label">Nick</label>
+      <input id="userNameInput" class="form-control" formControlName="userName">
+      <div class="form-text"
+        *ngIf="createForm.get('userName')?.invalid && (createForm.get('userName')?.dirty || createForm.get('userName')?.touched)">
+        Nick jest wymagany.
+      </div>
+    </div>
+    <div class="mt-2">
+      <label for="emailInput" class="form-label">Email</label>
+      <input id="emailInput" class="form-control" formControlName="email">
+      <div class="form-text"
+        *ngIf="createForm.get('email')?.invalid && (createForm.get('email')?.dirty || createForm.get('email')?.touched)">
+        Email jest wymagany.
+      </div>
+    </div>
+    <div class="mt-2">
+      <label for="passwordInput" class="form-label">Has&#322;o</label>
+      <input id="passwordInput" pattern="(?=^.{8,}$)((?=.*\d)(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" class="form-control" formControlName="password">
+      <div class="form-text"
+        *ngIf="createForm.get('password')?.invalid && (createForm.get('password')?.dirty || createForm.get('password')?.touched)">
+        Has&#322;o jest wymagane.
+      </div>
+    </div>
+    <div class="modal-footer d-flex justify-content-end">
+      <button type="submit" class="btn btn-outline-dark" [disabled]="createForm.invalid">Dodaj</button>
+    </div>
+  </form>
+</div>

@@ -1,9 +1,19 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { Table } from 'primeng/table';
+import { Observable } from 'rxjs';
 import { User } from '../services/users/interfaces';
-import { UsersService } from '../services/users/users.service';
+import { CreateUserComponent } from './create-user/create-user.component';
+import { UsersFacade } from '../services/users/users.facade';
+import { UpdateUserComponent } from './update-user/update-user.component';
+import { DeleteUserComponent } from './delete-user/delete-user.component';
 
 @Component({
   selector: 'app-users',
@@ -11,104 +21,58 @@ import { UsersService } from '../services/users/users.service';
   styleUrls: ['./users.component.css'],
 })
 export class UsersComponent implements OnInit {
-  @ViewChild('dt') dt: Table | undefined;
-  users: User[] = [];
-  selectedUser: User | undefined;
+  users$: Observable<User[]> = this.usersFacade.allUsers$;
   productDialog: boolean = false;
-  createForm!: FormGroup;
-  updateForm!: FormGroup;
-
-  applyFilterGlobal($event: any, stringVal: any) {
-    console.log(($event.target as HTMLInputElement).value);
-    this.dt!.filterGlobal(
-      ($event.target as HTMLInputElement).value,
-      'contains'
-    );
-  }
 
   constructor(
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService,
-    private usersService: UsersService,
-    private fb: FormBuilder
+    private usersFacade: UsersFacade,
+    private modalService: NgbModal
   ) {}
 
-  ngOnInit() {
-    this.usersService.all().subscribe((users) => {
-      this.users = users;
-    });
-
-    this.createForm = this.fb.group({
-      userName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
-    });
-
-    this.updateForm = this.fb.group({
-      userName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['']
-    });
+  ngOnInit(): void {
+    this.reset();
+    this.usersFacade.mutations$.subscribe((_) => this.reset());
   }
 
-  createUserSubmit(form: FormGroup) {
-    let newUser: User = {
-        userName: form.value.userName,
-        email: form.value.email,
-        password: form.value.password,
-        emailConfirmed: true
-    };
-    this.usersService.create(newUser).subscribe((id) => {
-      newUser.id = id;
-      this.users = [...this.users, newUser];
-      this.hideDialog();
-    });
-  }
-
-  updateUserSubmit(form: FormGroup){
-    const userToUpdate: User = {
-      id: this.selectedUser?.id!,
-      userName: form.value.userName,
-      email: form.value.email,
-      password: form.value.password,
-      emailConfirmed: true
-    };
-    this.usersService.update(userToUpdate).subscribe((_) => {
-      this.users = this.users.map((user) => {
-        return user.id === userToUpdate.id
-          ? {...user, ...userToUpdate}
-          : user;
-      });
-      this.selectedUser = undefined;
-      this.hideDialog();
-    });
+  reset() {
+    this.usersFacade.loadUsers();
   }
 
   createUser() {
-    this.productDialog = true;
-  }
-
-  hideDialog(){
-    this.productDialog = false;
+    const modalRef = this.modalService.open(CreateUserComponent, {
+      centered: true,
+    });
+    modalRef.result.then(
+      (result) => {
+        this.usersFacade.createUser(result);
+      },
+      (_) => _
+    );
   }
 
   editUser(user: User) {
-    console.log(user);
-    this.selectedUser = user;
-    this.updateForm.patchValue(user);
-    this.productDialog = true;
+    const modalRef = this.modalService.open(UpdateUserComponent, {
+      centered: true,
+    });
+    modalRef.componentInstance.user = user;
+    modalRef.result.then(
+      (result) => {
+        this.usersFacade.updateUser(result);
+      },
+      (_) => _
+    );
   }
 
   deleteUser(user: User) {
-    this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + user.email + '?',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.usersService.delete(user).subscribe((_) => {
-          this.users = this.users.filter((u) => u.id !== user.id);
-        });
-      },
+    const modalRef = this.modalService.open(DeleteUserComponent, {
+      centered: true,
     });
+    modalRef.componentInstance.user = user;
+    modalRef.result.then(
+      (_) => {
+        this.usersFacade.deleteUser(user);
+      },
+      (_) => _
+    );
   }
 }

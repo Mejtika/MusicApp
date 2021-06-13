@@ -1,0 +1,32 @@
+.button {
+  background: -webkit-linear-gradient(#e1423a, #181615);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.button:hover {
+  background: -webkit-linear-gradient(#cf4b4493, #29292993);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  cursor: pointer;
+}
+
+.createbutton {
+  background: -webkit-linear-gradient(#e1423a, #181615);
+  color: #eee;
+  border: none;
+}
+
+.createbutton:hover {
+  background: -webkit-linear-gradient(#cf4b44c8, #292929c8);
+}
+
+.search {
+  width: 40%;
+}
+
+@media only screen and (max-width: 650px) {
+  .search {
+    width: 60%;
+  }
+}

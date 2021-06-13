@@ -1,0 +1,12 @@
+<div class="modal-header d-flex justify-content-end">
+  <div aria-label="Close" (click)="activeModal.dismiss(false)">
+    <i class="close fs-5 bi bi-x-circle-fill"></i>
+  </div>
+</div>
+  <div class="modal-body d-flex align-content-center justify-content-center">
+    <h4 class="mt-2 modal-title" id="modal-basic-title">Potwierdź usunięcie {{user.email}}</h4>
+  </div>
+  <div class="modal-footer d-flex justify-content-between">
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss(false)">Anuluj</button>
+    <button type="button" class="btn btn-outline-danger" (click)="activeModal.close(true)">Usuń</button>
+  </div>

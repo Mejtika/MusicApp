@@ -22,6 +22,10 @@ import { MessageService } from 'primeng/api';
 import { PasswordModule } from 'primeng/password';
 import { UsersService } from '../services/users/users.service';
 import { UsersFacade } from '../services/users/users.facade';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CreateUserComponent } from './create-user/create-user.component';
+import { UserListComponent } from './user-list/user-list.component';
+import { UpdateUserComponent } from './update-user/update-user.component';
 
 const routes: Routes = [{ path: '', component: UsersComponent }];
 
@@ -44,9 +48,16 @@ const routes: Routes = [{ path: '', component: UsersComponent }];
     InputNumberModule,
     ConfirmDialogModule,
     PasswordModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule,
   ],
-  declarations: [UsersComponent],
+  declarations: [
+    UsersComponent,
+    CreateUserComponent,
+    UserListComponent,
+    CreateUserComponent,
+    UpdateUserComponent,
+  ],
   providers: [MessageService, ConfirmationService, UsersService, UsersFacade],
 })
 export class UsersModule {}
