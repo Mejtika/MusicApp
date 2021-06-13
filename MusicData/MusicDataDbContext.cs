@@ -19,6 +19,8 @@ namespace MusicApp.MusicData
 
         public DbSet<EmissionsView> EmissionsView { get; set; }
 
+        public DbSet<RankingView> RankingView { get; set; }
+
         public MusicDataDbContext(DbContextOptions<MusicDataDbContext> options) : base(options)
         {
         }
@@ -47,6 +49,13 @@ namespace MusicApp.MusicData
                 {
                     eb.HasKey(e => e.EmissionId);
                     eb.ToView("vEmissions");
+                });
+
+            modelBuilder
+                .Entity<RankingView>(eb =>
+                {
+                    eb.HasNoKey();
+                    eb.ToView("vRanking");
                 });
         }
     }
