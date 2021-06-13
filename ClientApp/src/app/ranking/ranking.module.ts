@@ -15,6 +15,8 @@ import {DropdownModule} from 'primeng/dropdown';
 import {ProgressBarModule} from 'primeng/progressbar';
 import {InputTextModule} from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
+import { SongsService } from '../services/songs/songs.service';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 
 const routes: Routes = [
   {
@@ -38,8 +40,10 @@ const routes: Routes = [
 		ToastModule,
     InputTextModule,
     ProgressBarModule,
-    FormsModule
+    FormsModule,
+    ProgressSpinnerModule
   ],
-  declarations: [RankingComponent]
+  declarations: [RankingComponent],
+  providers: [SongsService]
 })
 export class RankingModule { }

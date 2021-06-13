@@ -22,3 +22,10 @@ export interface ChannelReport {
   name: string;
   count: number;
 }
+
+export interface RankedSong {
+  place: number;
+  title: string;
+  songId: number;
+  count: string;
+}

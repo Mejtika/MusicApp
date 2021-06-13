@@ -1,19 +1,39 @@
-<div class="container mt-2">
-  <p-table [columns]="cols" [value]="cars" [scrollable]="true" [rows]="100" scrollHeight="500px"
-  [virtualScroll]="true" [virtualRowHeight]="34">
-  <ng-template pTemplate="header" let-columns>
-      <tr>
-          <th *ngFor="let col of columns">
-              {{col.header}}
-          </th>
-      </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-rowData let-columns="columns">
-      <tr style="height:34px">
-          <td *ngFor="let col of columns">
-              {{rowData[col.field]}}
+<div class="main container mt-2">
+  <ng-container *ngIf="(ranking$ | async) as ranking; else loading">
+    <p-table [columns]="cols" [responsive]=true [value]="ranking" [scrollable]="true" [rows]="100" scrollHeight="500px"
+      [virtualScroll]="true" dataKey="code" [virtualRowHeight]="34">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th>Miejsce</th>
+          <th>Tytuł</th>
+          <th>Odtworzenia</th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rank>
+        <tr [pSelectableRow]="rank">
+          <td>
+            <span class="p-column-title">Miejsce</span>
+            {{rank.place}}
           </td>
-      </tr>
+          <td>
+            <span class="p-column-title">Tytuł</span>
+            {{rank.title}}
+          </td>
+          <td>
+            <span class="p-column-title">Odtworzenia</span>
+            {{rank.count}}
+          </td>
+          <td>
+            <button type="button" pButton pRipple icon="pi pi-search" (click)="selectedRank(rank)"></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </ng-container>
+  <ng-template #loading>
+    <div class="d-flex justify-content-center">
+      <p-progressSpinner></p-progressSpinner>
+    </div>
   </ng-template>
-  </p-table>
 </div>
