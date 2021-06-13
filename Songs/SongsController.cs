@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MusicApp.Songs.GetChannelsReport;
+using MusicApp.Songs.GetRanking;
 using MusicApp.Songs.GetSong;
 using MusicApp.Songs.GetYearsReport;
 using Newtonsoft.Json;
@@ -37,6 +38,13 @@ namespace MusicApp
         public async Task<IActionResult> GetReportByChannel(int id)
         {
             var result = await _mediator.Send(new GetChannelsReportQuery(id));
+            return Ok(result);
+        }
+
+        [HttpGet("ranking")]
+        public async Task<IActionResult> GetRanking()
+        {
+            var result = await _mediator.Send(new GetRankingQuery());
             return Ok(result);
         }
     }
