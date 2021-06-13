@@ -30,19 +30,20 @@ export class EmissionsComponent {
     { label: 'Data po', value: FilterMatchMode.GREATER_THAN },
   ];
   durationModeOptions: SelectItem[] = [
-    { label: 'Data równa', value: 'eq' },
+    { label: 'Czas równy', value: 'eq' },
     { label: 'Czas mniejszy', value: FilterMatchMode.LESS_THAN },
     { label: 'Czas większy', value: FilterMatchMode.GREATER_THAN },
   ];
   rowsPerPageOptions: number[] = [5, 10, 15];
   rows: number = 10;
   filters: string = '';
+  ordering: string = '';
   excelLoader: boolean = false;
 
   constructor(
     private router: Router,
     private emissionsService: EmissionsService
-  ) { }
+  ) {}
 
   ngOnInit() {
     const initialValue = `$skip=0&$top=${this.rows}&count=true`;
@@ -59,18 +60,45 @@ export class EmissionsComponent {
 
   exportExcel() {
     this.excelLoader = true;
-    this.emissionsService.getForExcel(this.filters).subscribe((result) => {
-      const emissions: Emission[] = result.value;
-      import('xlsx').then((xlsx) => {
-        const worksheet = xlsx.utils.json_to_sheet(emissions);
-        const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
-        const excelBuffer: any = xlsx.write(workbook, {
-          bookType: 'xlsx',
-          type: 'array',
+    this.emissionsService
+      .getForExcel(`${this.filters}&${this.ordering}`)
+      .subscribe((result) => {
+        let emissions: any = result.value;
+        emissions = emissions.map((e: any) => {
+          return {
+            ...e,
+            Duration: moment(e.Duration, [moment.ISO_8601, 'HH:mm:ss']).format(
+              'HH:mm:ss'
+            ),
+          };
         });
-        this.saveAsExcelFile(excelBuffer, 'customers');
+
+        emissions = emissions.map((e: any) => {
+          return { ...e, EmittedOn: moment(e.EmittedOn).format("MM/DD/YYYY HH:mm:ss") };
+        });
+        const header = {
+          header: [
+            'EmissionId',
+            'ChannelName',
+            'SongId',
+            'SongTitle',
+            'EmittedOn',
+            'Duration',
+          ],
+        };
+        import('xlsx').then((xlsx) => {
+          const worksheet = xlsx.utils.json_to_sheet(emissions, header);
+          const workbook = {
+            Sheets: { data: worksheet },
+            SheetNames: ['data'],
+          };
+          const excelBuffer: any = xlsx.write(workbook, {
+            bookType: 'xlsx',
+            type: 'array',
+          });
+          this.saveAsExcelFile(excelBuffer, 'emissions');
+        });
       });
-    });
   }
 
   saveAsExcelFile(buffer: any, fileName: string): void {
@@ -83,14 +111,17 @@ export class EmissionsComponent {
     this.excelLoader = false;
     FileSaver.saveAs(
       data,
-      fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION
+      fileName +
+        '_export_' +
+        moment().format('MM-DD-YYYY_hh:mm:ss').toString() +
+        EXCEL_EXTENSION
     );
   }
 
   private getQueryParams($event: LazyLoadEvent) {
-    const filters = (this.filters = this.createFilters($event.filters));
+    const filters: string = (this.filters = this.createFilters($event.filters));
     const paging: string = `$skip=${$event.first}&$top=${$event.rows}`;
-    const ordering: string = this.createOrdering($event);
+    const ordering: string = (this.ordering = this.createOrdering($event));
     const result = `${filters}&${paging}&${ordering}`;
     return result;
   }
