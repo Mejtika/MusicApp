@@ -4,7 +4,7 @@
   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="rowsPerPageOptions">
   <ng-template pTemplate="caption">
     <ng-container *ngIf="!excelLoader; else loading">
-      <span class="excelContainer" (click)="exportToExcel()"><i class="fs-2 bi bi-file-earmark-excel-fill excel"></i></span>
+      <span class="excelContainer" (click)="exportToExcel()"><i class="fs-1 bi bi-file-earmark-excel-fill excel"></i></span>
     </ng-container>
     <ng-template #loading>
       <p-progressSpinner [style]="{width: '25px', height: '25px'}"></p-progressSpinner>

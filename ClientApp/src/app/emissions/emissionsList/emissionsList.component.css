@@ -25,7 +25,7 @@
 }
 
 .excel:hover {
-  background: -webkit-linear-gradient(#ca7975, #717070);
+  background: -webkit-linear-gradient(#cf4b44c8, #292929c8);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   cursor: pointer;
