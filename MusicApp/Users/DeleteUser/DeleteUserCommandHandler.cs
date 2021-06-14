@@ -21,7 +21,7 @@ namespace MusicApp.Users.DeleteUser
             var user = await _userManager.FindByIdAsync(request.Id);
             if (user is not { })
             {
-                throw new InvalidOperationException("User don't exist");
+                throw new InvalidOperationException("Cannot find user");
             }
 
             var deletionResult = await _userManager.DeleteAsync(user);

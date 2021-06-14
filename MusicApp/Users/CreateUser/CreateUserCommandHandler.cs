@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -24,10 +25,12 @@ namespace MusicApp.Users.CreateUser
             };
 
             var result = await _userManager.CreateAsync(user, request.Password);
-            if (result.Succeeded)
+            if (!result.Succeeded)
             {
-                await _userManager.AddToRoleAsync(user, "User");
+                throw new InvalidOperationException("Cannot create user");
             }
+
+            await _userManager.AddToRoleAsync(user, "User");
 
             return user.Id;
         }

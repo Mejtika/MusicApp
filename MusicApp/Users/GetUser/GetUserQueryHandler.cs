@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -18,7 +19,11 @@ namespace MusicApp.Users.GetUser
 
         public async Task<UserDto> Handle(GetUserQuery request, CancellationToken cancellationToken)
         {
-            var user = await _userManager.Users.SingleOrDefaultAsync(user => user.Id == request.Id, cancellationToken);
+            var user = await _userManager.Users.SingleOrDefaultAsync(u => u.Id == request.Id, cancellationToken);
+            if (user is null)
+            {
+                throw new InvalidOperationException("Cannot find user");
+            }
 
             var usersDto = new UserDto
             {
