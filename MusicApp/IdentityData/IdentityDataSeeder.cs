@@ -28,10 +28,10 @@ namespace MusicApp.IdentityData
             var businessUser = new ApplicationUser
             {
                 Id = "b8633e2d-a33b-45e6-8329-1958b3252bbd",
-                UserName = "business@business.pl",
-                NormalizedUserName = "BUSINESS@BUSINESS.PL",
-                Email = "business@business.pl",
-                NormalizedEmail = "BUSINESS@BUSINESS.PL",
+                UserName = "Admin",
+                NormalizedUserName = "ADMIN",
+                Email = "admin@admin.pl",
+                NormalizedEmail = "ADMIN@ADMIN.PL",
                 EmailConfirmed = true,
             };
 
@@ -39,10 +39,10 @@ namespace MusicApp.IdentityData
             var clientUser = new ApplicationUser
             {
                 Id = "3f396b9a-37b7-11eb-adc1-0242ac120002",
-                UserName = "client@client.pl",
-                NormalizedUserName = "CLIENT@CLIENT.PL",
-                Email = "client@client.pl",
-                NormalizedEmail = "CLIENT@CLIENT.PL",
+                UserName = "User",
+                NormalizedUserName = "USER",
+                Email = "user@user.pl",
+                NormalizedEmail = "USER@USER.PL",
                 EmailConfirmed = true
             };
 
@@ -64,7 +64,7 @@ namespace MusicApp.IdentityData
             var exists = await _userManager.FindByEmailAsync(user.Email);
             if (exists == null)
             {
-                var result = await _userManager.CreateAsync(user, password);
+                await _userManager.CreateAsync(user, password);
             }
         }
     }
