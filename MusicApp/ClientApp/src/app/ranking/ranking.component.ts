@@ -22,7 +22,7 @@ export class RankingComponent implements OnInit {
     ];
   }
 
-  selectedRank(rank: RankedSong) {
+  selectRank(rank: RankedSong) {
     this.router.navigateByUrl(`/songs/${rank.songId}`);
   }
 }

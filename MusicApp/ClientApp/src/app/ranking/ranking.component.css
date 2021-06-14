@@ -1,3 +1,15 @@
-.main{
-    
+.button {
+  background: -webkit-linear-gradient(#e1423a, #181615);
+  color: #eee;
+  border: none;
+}
+
+.button:hover {
+  background: -webkit-linear-gradient(#cf4b44c8, #292929c8);
+}
+
+.collapsible {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

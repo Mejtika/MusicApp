@@ -30,3 +30,16 @@
   -webkit-text-fill-color: transparent;
   cursor: pointer;
 }
+
+.collapsible {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media only screen and (max-width: 650px) {
+  .filters{
+    flex-direction: column;
+    justify-content: start;
+  }
+}
