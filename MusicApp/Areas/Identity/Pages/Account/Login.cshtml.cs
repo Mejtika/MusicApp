@@ -66,15 +66,21 @@ namespace MusicApp.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(Input.Email);
-                var result = await _signInManager.PasswordSignInAsync(user, Input.Password, false, false);
-                if (result.Succeeded)
+                if (user is not { })
                 {
-                    _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                    ModelState.AddModelError(string.Empty, "Niepoprawny login lub hasło.");
+                    return Page();
                 }
 
-                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                return Page();
+                var result = await _signInManager.PasswordSignInAsync(user, Input.Password, false, false);
+                if (!result.Succeeded)
+                {
+                    ModelState.AddModelError(string.Empty, "Niepoprawny login lub hasło.");
+                    return Page();
+                }
+
+                _logger.LogInformation("User logged in.");
+                return LocalRedirect(returnUrl);
             }
 
             return Page();
