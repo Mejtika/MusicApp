@@ -1,10 +1,10 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MusicApp.IdentityData;
+using MusicApp.Users.Exceptions;
 
 namespace MusicApp.Users.GetUser
 {
@@ -22,7 +22,7 @@ namespace MusicApp.Users.GetUser
             var user = await _userManager.Users.SingleOrDefaultAsync(u => u.Id == request.Id, cancellationToken);
             if (user is null)
             {
-                throw new InvalidOperationException("Cannot find user");
+                throw new UserNotFoundException();
             }
 
             var usersDto = new UserDto

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using MusicApp.IdentityData;
+using MusicApp.Users.Exceptions;
 
 namespace MusicApp.Users.CreateUser
 {
@@ -27,7 +27,7 @@ namespace MusicApp.Users.CreateUser
             var result = await _userManager.CreateAsync(user, request.Password);
             if (!result.Succeeded)
             {
-                throw new InvalidOperationException("Cannot create user");
+                throw new InvalidUserDataException("Próba stworzenia nowego użytkownika nie powiodła się.");
             }
 
             await _userManager.AddToRoleAsync(user, "User");

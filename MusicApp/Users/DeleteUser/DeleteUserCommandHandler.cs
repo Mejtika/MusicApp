@@ -1,9 +1,9 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using MusicApp.IdentityData;
+using MusicApp.Users.Exceptions;
 
 namespace MusicApp.Users.DeleteUser
 {
@@ -21,13 +21,13 @@ namespace MusicApp.Users.DeleteUser
             var user = await _userManager.FindByIdAsync(request.Id);
             if (user is not { })
             {
-                throw new InvalidOperationException("Cannot find user");
+                throw new UserNotFoundException();
             }
 
             var deletionResult = await _userManager.DeleteAsync(user);
             if (!deletionResult.Succeeded)
             {
-                throw new InvalidOperationException("Cannot delete user");
+                throw new InvalidUserDataException("Próba usunięcia użytkownika nie powiodła się");
             }
 
             return Unit.Value;

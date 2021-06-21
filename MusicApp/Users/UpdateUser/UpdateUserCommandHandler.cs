@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using MusicApp.IdentityData;
-using MusicApp.Users.CreateUser;
+using MusicApp.Users.Exceptions;
 
 namespace MusicApp.Users.UpdateUser
 {
@@ -25,7 +22,7 @@ namespace MusicApp.Users.UpdateUser
 
             if (user is not { })
             {
-                throw new InvalidOperationException("User don't exist");
+                throw new UserNotFoundException();
             }
 
             if (!string.IsNullOrEmpty(request.Email))
@@ -33,7 +30,7 @@ namespace MusicApp.Users.UpdateUser
                 var updateEmailResult = await _userManager.SetEmailAsync(user, request.Email);
                 if (!updateEmailResult.Succeeded)
                 {
-                    throw new InvalidOperationException("Cannot update user's email");
+                    throw new InvalidUserDataException("Próba aktualizacji adresu email nie powiodła się.");
                 }
             }
 
@@ -43,7 +40,7 @@ namespace MusicApp.Users.UpdateUser
                 var confirmEmailResult = await _userManager.ConfirmEmailAsync(user, emailToken);
                 if (!confirmEmailResult.Succeeded)
                 {
-                    throw new InvalidOperationException("Cannot confirm user's email");
+                    throw new InvalidUserDataException("Próba aktywacji adresu email nie powiodła się.");
                 }
             }
 
@@ -52,7 +49,7 @@ namespace MusicApp.Users.UpdateUser
                 var updateEmailResult = await _userManager.SetUserNameAsync(user, request.UserName);
                 if (!updateEmailResult.Succeeded)
                 {
-                    throw new InvalidOperationException("Cannot update user's userName");
+                    throw new InvalidUserDataException("Próba aktualizacji nicku nie powiodła się.");
                 }
             }
 
@@ -62,7 +59,7 @@ namespace MusicApp.Users.UpdateUser
                 var updatePasswordResult = await _userManager.ResetPasswordAsync(user, passwordToken, request.Password);
                 if (!updatePasswordResult.Succeeded)
                 {
-                    throw new InvalidOperationException("Cannot update user's password");
+                    throw new InvalidUserDataException("Próba aktualizacji hasła nie powiodła się.");
                 }
             }
 
