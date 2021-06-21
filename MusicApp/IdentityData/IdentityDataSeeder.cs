@@ -2,8 +2,11 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using MusicApp.MusicData;
 
 namespace MusicApp.IdentityData
 {
@@ -11,19 +14,28 @@ namespace MusicApp.IdentityData
     {
         private const string AdminRole = "Admin";
         private const string UserRole = "User";
+        private readonly IdentityDbContext _identityDbContext;
+        private readonly MusicDataDbContext _musicDataDbContext;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
         public IdentityDataSeeder(
+            IdentityDbContext identityDbContext,
+            MusicDataDbContext musicDataDbContext,
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager)
         {
+            _identityDbContext = identityDbContext;
+            _musicDataDbContext = musicDataDbContext;
             _userManager = userManager;
             _roleManager = roleManager;
         }
 
         public async Task SeedAsync()
         {
+            await _identityDbContext.Database.MigrateAsync();
+            await _musicDataDbContext.Database.MigrateAsync();
+
             var adminPassword = "Admin12345!";
             var businessUser = new ApplicationUser
             {
