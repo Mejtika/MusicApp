@@ -16,6 +16,7 @@ using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
 using Microsoft.VisualBasic;
 using MusicApp.IdentityData;
+using MusicApp.Middlewares.Exceptions;
 using MusicApp.MusicData;
 using MusicApp.MusicData.Views;
 
@@ -42,7 +43,7 @@ namespace MusicApp
                 options.MaxTop = 100;
                 options.Filter().OrderBy().Count().AddModel("odata", GetEdmModel());
             });
-
+            services.AddScoped<ErrorHandlerMiddleware>();
 
             services.AddDbContext<IdentityDbContext>(options =>
                 options.UseSqlServer(
@@ -113,16 +114,8 @@ namespace MusicApp
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseMigrationsEndPoint();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-                app.UseHsts();
-            }
+            app.UseMiddleware<ErrorHandlerMiddleware>();
+            app.UseHsts();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
