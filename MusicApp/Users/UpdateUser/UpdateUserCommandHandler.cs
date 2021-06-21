@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using System.Transactions;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using MusicApp.IdentityData;
@@ -25,6 +26,7 @@ namespace MusicApp.Users.UpdateUser
                 throw new UserNotFoundException();
             }
 
+            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
             if (!string.IsNullOrEmpty(request.Email))
             {
                 var updateEmailResult = await _userManager.SetEmailAsync(user, request.Email);
@@ -62,7 +64,7 @@ namespace MusicApp.Users.UpdateUser
                     throw new InvalidUserDataException("Próba aktualizacji hasła nie powiodła się.");
                 }
             }
-
+            scope.Complete();
             return Unit.Value;
         }
     }
